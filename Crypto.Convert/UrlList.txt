@@ -1,0 +1,22 @@
+﻿https://min-api.cryptocompare.com/data/top/pairs?fsym=ACT*&limit=100
+
+https://api.fixer.io/latest
+https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=10
+
+https://api.coinmarketcap.com/v1/global/
+#shows global market cap for crypto assets
+
+https://api.coinmarketcap.com/v1/ticker/
+#shows top 100 crypto currencies along with marketcaps, returns, etc
+
+#documentation for coinmarketcap.com is here:
+https://coinmarketcap.com/api/
+
+https://coinmap.org/api/v1/venues/
+#lists ATMs for Bitcoin around the world with latitude and longitude
+
+https://www.cryptocompare.com/api/data/coinlist/
+#lists useful info for every crypto -- need IDs from this list for other queries
+
+https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=1182
+#lists more thorough info for a specific coin
