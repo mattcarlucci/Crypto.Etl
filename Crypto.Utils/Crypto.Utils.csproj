@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoCompareUrl.cs" />
+    <Compile Include="GobalExtensions.cs" />
+    <Compile Include="JsonEtl.cs" />
+    <Compile Include="OutputEtl.cs" />
+    <Compile Include="UrlFileManager.cs" />
     <Compile Include="UrlModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

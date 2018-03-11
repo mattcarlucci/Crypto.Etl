@@ -51,6 +51,7 @@ namespace Crypto.Convert
                     JsonEtl etl = new JsonEtl();
                     Console.WriteLine("\tOutput: {0}\r\n{1}", fileName, new String('*', 35));
 
+                    model.DeleteFile();
                     etl.ToCsv(json, fileName);
                 }
                 catch(Exception ex)

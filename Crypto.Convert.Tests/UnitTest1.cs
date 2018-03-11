@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.IO;
 using System.Linq;
 using Crypto.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -90,6 +91,23 @@ namespace Crypto.Convert.Tests
 
             CryptoCompareUrl model = new CryptoCompareUrl(manager.Urls.First());
             Assert.IsTrue(model.GetUrlData().StartsWith("{\"Response\":\"Success\""));           
+        }
+        /// <summary>
+        /// Tests the output file.
+        /// </summary>
+        [TestMethod]
+        public void test_output_file()
+        {
+            UrlFileManager manager = new UrlFileManager();
+            manager.Add(URL);
+
+            CryptoCompareUrl model = new CryptoCompareUrl(manager.Urls.First());
+            JsonEtl etl = new JsonEtl();
+            etl.ToCsv(model.GetUrlData(), model.GetFileName());
+          
+            Assert.IsTrue(File.Exists(model.GetFileName()));
+            model.DeleteFile();
+            
         }
     }
 }
