@@ -1,0 +1,119 @@
+﻿https://www.cryptocompare.com/api/data/coinlist/
+
+#Ticker
+https://api.coinmarketcap.com/v1/ticker/
+https://api.coinmarketcap.com/v1/ticker/?limit=10
+https://api.coinmarketcap.com/v1/ticker/?start=100&limit=10
+https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=10
+
+#Ticker (Specific Currency)
+https://api.coinmarketcap.com/v1/ticker/bitcoin/
+https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=EUR
+
+#Global Data
+https://api.coinmarketcap.com/v1/global/
+https://api.coinmarketcap.com/v1/global/?convert=EUR
+
+
+#Get coin list example
+https://www.cryptocompare.com/api/data/coinlist/
+
+# Prices
+https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR
+https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR
+https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=XMR,ETH,ZEC
+https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=XMR,REP,ZEC
+https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR&e=Coinbase
+
+#Multi Price Calls
+https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR
+https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR 
+https://min-api.cryptocompare.com/data/pricemulti?fsyms=REP,BTC&tsyms=USD,XMR 
+https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD&e=Coinbase
+
+
+https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH,DASH&tsyms=BTC,USD,EUR
+https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH,DASH&tsyms=BTC,USD,EUR
+https://min-api.cryptocompare.com/data/pricemultifull?fsyms=REP,BTC&tsyms=USD,XMR
+https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH&tsyms=USD&e=Coinbase
+
+# Generate Averages
+https://min-api.cryptocompare.com/data/generateAvg?fsym=BTC&tsym=USD&e=Coinbase,Bitfinex
+https://min-api.cryptocompare.com/data/generateAvg?fsym=ETH&tsym=BTC&e=Poloniex,Kraken,Coinbase,HitBTC
+https://min-api.cryptocompare.com/data/generateAvg?fsym=ZEC&tsym=USD&e=Poloniex,Bitfinex
+
+# Daily Averages
+https://min-api.cryptocompare.com/data/dayAvg?fsym=BTC&tsym=USD&UTCHourDiff=-8
+https://min-api.cryptocompare.com/data/dayAvg?fsym=ETH&tsym=GBP&toTs=1487116800
+https://min-api.cryptocompare.com/data/dayAvg?fsym=ETH&tsym=GBP&toTs=1487116800&tryConversion=false
+https://min-api.cryptocompare.com/data/dayAvg?fsym=ETH&tsym=GBP&toTs=1487116800&avgType=MidHighLow
+https://min-api.cryptocompare.com/data/dayAvg?fsym=ETH&tsym=GBP&toTs=1487116800&avgType=MidHighLow&tryConversion=false
+https://min-api.cryptocompare.com/data/dayAvg?fsym=ETH&tsym=GBP&toTs=1487116800&avgType=VolFVolT&tryConversion=false
+https://min-api.cryptocompare.com/data/dayAvg?fsym=BTC&tsym=USD&toTs=1487116800&e=Bitfinex
+ 
+# Historical Prices
+https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=BTC,USD,EUR&ts=1452680400
+
+ # Coin Snapshots
+https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=BTC&tsym=USD
+https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=ETH&tsym=BTC
+
+
+https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=1182
+https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=3808
+https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=7605
+
+# Get social stats example
+https://www.cryptocompare.com/api/data/socialstats/?id=1182
+https://www.cryptocompare.com/api/data/socialstats/?id=3808
+https://www.cryptocompare.com/api/data/socialstats/?id=7605
+
+# Historical Minute
+https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=USD&limit=60&aggregate=3&e=CCCAGG
+https://min-api.cryptocompare.com/data/histominute?fsym=ETH&tsym=USD&limit=60&aggregate=3&e=Kraken
+https://min-api.cryptocompare.com/data/histominute?fsym=ETH&tsym=BTC&limit=60&aggregate=1&toTs=1452680400
+https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=ETH&limit=30&aggregate=1&e=CCCAGG
+
+
+# Historical Hour
+https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=USD&limit=60&aggregate=3&e=CCCAGG
+https://min-api.cryptocompare.com/data/histohour?fsym=ETH&tsym=USD&limit=60&aggregate=3&e=Kraken
+https://min-api.cryptocompare.com/data/histohour?fsym=ETH&tsym=BTC&limit=60&aggregate=1&toTs=1452680400
+https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=ETH&limit=30&aggregate=1&e=CCCAGG
+
+# Historical Daily
+https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=60&aggregate=3&e=CCCAGG
+https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=USD&limit=60&aggregate=3&e=Kraken
+https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=BTC&limit=60&aggregate=1&toTs=1452680400
+https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=ETH&limit=30&aggregate=1&e=CCCAGG
+
+# Minute Contracts
+https://www.cryptocompare.com/api/data/miningequipment/
+
+# Top Pairs
+https://min-api.cryptocompare.com/data/top/pairs?fsym=ETH
+https://min-api.cryptocompare.com/data/top/pairs?fsym=BTC&limit=20
+https://min-api.cryptocompare.com/data/top/pairs?fsym=ZEC&limit=20
+
+https://min-api.cryptocompare.com/data/top/pairs?fsym=ACT*&limit=100
+
+https://api.fixer.io/latest
+https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=10
+
+https://api.coinmarketcap.com/v1/global/
+#shows global market cap for crypto assets
+
+https://api.coinmarketcap.com/v1/ticker/
+#shows top 100 crypto currencies along with marketcaps, returns, etc
+
+#documentation for coinmarketcap.com is here:
+https://coinmarketcap.com/api/
+
+https://coinmap.org/api/v1/venues/
+#lists ATMs for Bitcoin around the world with latitude and longitude
+
+https://www.cryptocompare.com/api/data/coinlist/
+#lists useful info for every crypto -- need IDs from this list for other queries
+
+https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=1182
+#lists more thorough info for a specific coin

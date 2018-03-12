@@ -11,9 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -25,32 +27,90 @@ namespace Crypto.Utils
     /// </summary>
     /// <seealso cref="Crypto.Utils.OutputEtl" />
     public class JsonEtl : OutputEtl
-    {
+    {       
+        /// <summary>
+        /// Save as CSV.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        public override void ToCsv(UrlModel model)
+        {  
+            var content = model.GetUrlData();
+            var dataSet = Transform(content);
+                        
+            TransformTime(dataSet);
+            TransformData(dataSet, model);          
+        }
 
         /// <summary>
-        /// To the CSV.
+        /// Saves the file.
         /// </summary>
-        /// <param name="content">Content of the json.</param>
+        /// <param name="table">The table.</param>
+        /// <param name="model">The model.</param>
         /// <param name="file">The file.</param>
-        public override void ToCsv(string content, string file)
+        private void SaveFile(DataTable table, UrlModel model, string file)
         {
-            var dataSet = Transform(content);
-            var dataTable = Transform(dataSet);
-
-           
-                      
             var lines = new List<string>();
-            string[] columnNames = dataTable.Columns.Cast<DataColumn>().
-                                              Select(column => column.ColumnName).
-                                              ToArray();
-            var header = string.Join(",", columnNames);
+           
+            var header = string.Join(",", table.ColumnNames());
             lines.Add(header);
-            var valueLines = dataTable.AsEnumerable()
-                               .Select(row => string.Join(",", row.ItemArray));
-            lines.AddRange(valueLines);
+
+            var values = table.AsEnumerable().Select(row => FormatRow(row));
+            lines.AddRange(values);
+
+            UrlModel.DeleteFile(file);
             File.WriteAllLines(file, lines);
         }
-       
+
+        /// <summary>
+        /// Transforms the data.
+        /// </summary>
+        /// <param name="ds">The ds.</param>
+        /// <param name="model">The model.</param>
+        private void TransformData(DataSet ds, UrlModel model)
+        {
+            List<DataTable> tables = ds.Tables.Cast<DataTable>().ToList();
+            var results = tables.GroupBy(g => GroupByUnique(g)).ToList();
+
+            foreach (var result in results)
+            {
+                for (int i = 1; i < result.Count(); i++)
+                {
+                    result.First().Merge(result.Skip(i).Take(1).SingleOrDefault());
+                }
+                var file = string.Format("{0}_{1}.csv", model.GetRootFileName(""), result.Key);
+                SaveFile(result.First(), model, file);
+            }
+        }
+        /// <summary>
+        /// Groups the by unique.
+        /// </summary>
+        /// <param name="g">The g.</param>
+        /// <returns>System.String.</returns>
+        private static string GroupByUnique(DataTable g)
+        {
+            return g.PrimaryKey.Count() > 0
+                     ? g.PrimaryKey.First().ColumnName
+                     : g.Columns.Cast<DataColumn>().
+                         First().ColumnName;
+        }
+        /// <summary>
+        /// Formats the row.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <returns>System.String.</returns>
+        private static string FormatRow(DataRow row)
+        {
+            return "\"" + string.Join("\",\"", row.ItemArray.Select(s => FormatCol(s))) + "\"";
+        }
+        /// <summary>
+        /// Formats the col.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>System.String.</returns>
+        private static string FormatCol(object value)
+        {
+            return value.ToString().Replace("\"", "\"\"");
+        }
     }
 
 

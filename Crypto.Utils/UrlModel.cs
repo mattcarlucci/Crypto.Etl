@@ -101,7 +101,7 @@ namespace Crypto.Utils
         /// </summary>
         /// <param name="extension">The extension.</param>
         /// <returns>System.String.</returns>
-        public string GetFileName(string extension = ".csv")
+        public string GetRootFileName(string extension = ".csv")
         {
             var uriBuilder = new UriBuilder(sUrl);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -129,7 +129,7 @@ namespace Crypto.Utils
         /// </summary>
         public void DeleteFile()
         {
-            DeleteFile(GetFileName());
+            DeleteFile(GetRootFileName());
         }
         /// <summary>
         /// Gets the URL data.

@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 
@@ -53,6 +54,16 @@ namespace Crypto.Utils
         public static string[] List(this string value, params char[] tokens)
         {
             return value.Split(tokens, StringSplitOptions.RemoveEmptyEntries);
+        }
+        /// <summary>
+        /// Columns the names.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns>System.String[].</returns>
+        public static string[] ColumnNames(this DataTable table)
+        {
+            return table.Columns.Cast<DataColumn>().
+                Select(column => column.ColumnName).ToArray();
         }
     }
 

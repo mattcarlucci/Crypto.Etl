@@ -14,6 +14,7 @@
 using Crypto.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,8 +31,10 @@ namespace Crypto.Convert
         /// </summary>
         /// <param name="args">The arguments.</param>
         static void Main(string[] args)
-        {     
-            UrlFileManager manager = new UrlFileManager("UrlList.txt");
+        {
+            var urlFile = args.Count() > 0 && File.Exists(args[0]) ? args[0] : "UrlList.txt";
+
+            UrlFileManager manager = new UrlFileManager(urlFile);
 
             Console.WriteLine("Reading file {0}\r\n\tUrl Count: {1}\r\n{2}", 
                 manager.File, manager.Urls.Count(), new String('*', 35));
@@ -44,15 +47,10 @@ namespace Crypto.Convert
 
                     Console.WriteLine("Processing Url {0}\r\n\tType: {1}\r\n\tFrom Symbol: {2}",
                         model.GetUrlPath(), model.GetUrlType(), model.FromSymbol);
-
-                    var fileName = model.GetFileName();
-                    var json = model.GetUrlData();
-
-                    JsonEtl etl = new JsonEtl();
-                    Console.WriteLine("\tOutput: {0}\r\n{1}", fileName, new String('*', 35));
-
-                    model.DeleteFile();
-                    etl.ToCsv(json, fileName);
+                    
+                    OutputEtl etl = new JsonEtl();
+                    Console.WriteLine("\tOutput: {0}\r\n{1}", model.GetRootFileName(), new String('*', 35));
+                    etl.ToCsv(model);
                 }
                 catch(Exception ex)
                 {

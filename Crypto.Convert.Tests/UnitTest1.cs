@@ -77,7 +77,7 @@ namespace Crypto.Convert.Tests
             manager.Add(URL);
 
             CryptoCompareUrl model = new CryptoCompareUrl(manager.Urls.First());
-            Assert.AreEqual(model.GetFileName(), "pairs_ACT@_100.csv");
+            Assert.AreEqual(model.GetRootFileName(), "pairs_ACT@_100.csv");
         }
 
         /// <summary>
@@ -96,18 +96,19 @@ namespace Crypto.Convert.Tests
         /// Tests the output file.
         /// </summary>
         [TestMethod]
-        public void test_output_file()
+        public void test_output_files()
         {
             UrlFileManager manager = new UrlFileManager();
             manager.Add(URL);
 
             CryptoCompareUrl model = new CryptoCompareUrl(manager.Urls.First());
             JsonEtl etl = new JsonEtl();
-            etl.ToCsv(model.GetUrlData(), model.GetFileName());
-          
-            Assert.IsTrue(File.Exists(model.GetFileName()));
-            model.DeleteFile();
-            
+            etl.ToCsv(model);
+
+            Assert.IsTrue(File.Exists("pairs_ACT@_100_record_Id.csv"));
+            Assert.IsTrue(File.Exists("pairs_ACT@_100_exchange.csv"));
+           
+
         }
     }
 }

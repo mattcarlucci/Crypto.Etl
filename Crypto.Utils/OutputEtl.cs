@@ -24,24 +24,31 @@ namespace Crypto.Utils
     /// Class OutputEtl.
     /// </summary>
     public abstract class OutputEtl
-    {
-        /// <summary>
-        /// Transforms the specified ds.
-        /// </summary>
-        /// <param name="ds">The ds.</param>
-        /// <returns>System.Data.DataTable.</returns>
-        protected virtual DataTable Transform(DataSet ds)
-        {
-            TransformTime(ds);
-            
-            return ds.Tables.Count == 1 ? ds.Tables[0] : ds.Tables[1];           
-        }
+    {             
         /// <summary>
         /// To the CSV.
         /// </summary>
-        /// <param name="content">Content of the json.</param>
-        /// <param name="file">The file.</param>
-        public abstract void ToCsv(string content, string file);
+        /// <param name="model">The model.</param>
+        public abstract void ToCsv(UrlModel model);
+        
+        /// <summary>
+        /// To the data set.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>DataSet.</returns>
+        protected virtual DataSet Transform(string content)
+        {
+            XmlNode xml = JsonConvert.DeserializeXmlNode("{records:{record:" + content + "}}");
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(xml.InnerXml);
+
+            using (XmlReader xmlReader = new XmlNodeReader(xml))
+            {
+                DataSet dataSet = new DataSet();
+                dataSet.ReadXml(xmlReader);
+                return dataSet;
+            }
+        }
 
         #region Private Static Methods
         /// <summary>
@@ -50,7 +57,7 @@ namespace Crypto.Utils
         /// <param name="ds">The ds.</param>
         protected static void TransformTime(DataSet ds)
         {
-            string[] dateFields = { "time", "created_on", "last_updated", "lastupdate" };
+            string[] dateFields = { "time", "created_on", "last_updated", "lastupdate", "date", "enddate" };
 
             foreach (DataTable table in ds.Tables)
             {
@@ -63,32 +70,16 @@ namespace Crypto.Utils
                     {
                         var value = row[col] as string;
                         if (string.IsNullOrEmpty(value)) continue;
-
-                        var dt = UnixTimeStampToDateTime(int.Parse(value));
-                        row[col] = dt.ToString();
+                        if (long.TryParse(value, out long result))
+                        {
+                            var dt = UnixTimeStampToDateTime(result);
+                            row[col] = dt.ToString();
+                        }
                     }
                 }
             }
         }
-        /// <summary>
-        /// To the data set.
-        /// </summary>
-        /// <param name="content">The content.</param>
-        /// <returns>DataSet.</returns>
-        protected virtual DataSet Transform(string content)
-        {
-            //used NewtonSoft json nuget package
-            XmlNode xml = JsonConvert.DeserializeXmlNode("{records:{record:" + content + "}}");
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.LoadXml(xml.InnerXml);
-
-            using (XmlReader xmlReader = new XmlNodeReader(xml))
-            {
-                DataSet dataSet = new DataSet();
-                dataSet.ReadXml(xmlReader);
-                return dataSet;
-            }
-        }
+        
         /// <summary>
         /// Unixes the time stamp to date time.
         /// </summary>
@@ -106,7 +97,7 @@ namespace Crypto.Utils
         /// </summary>
         /// <param name="unixTimeStamp">The unix time stamp.</param>
         /// <returns>DateTime.</returns>
-        public static DateTime UnixTimeStampToDateTime(int unixTimeStamp)
+        public static DateTime UnixTimeStampToDateTime(long unixTimeStamp)
         {
             return UnixTimeStampToDateTime((double)unixTimeStamp);
         }
